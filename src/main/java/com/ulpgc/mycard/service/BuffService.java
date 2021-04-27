@@ -6,15 +6,25 @@ import com.ulpgc.mycard.repository.BuffRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class BuffService {
     @Autowired
     BuffRepository buffRepository;
 
-    Buff getBuffById(Long id){
+    public Buff getBuffById(Long id){
         try{
             Buff buff = buffRepository.getById(id);
             return buff;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    public List<Buff> getBuffs(){
+        try{
+            return buffRepository.findAll();
         }catch (Exception e){
             return null;
         }

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -72,6 +73,15 @@ public class CardService {
             return true;
         }catch (Exception e){
             return false;
+        }
+    }
+
+    public Set<Buff> getCardBuffs(Long id){
+        try{
+            Card card = cardRepository.findCardByCardId(id);
+            return card.getBuffs();
+        } catch (Exception e){
+            return null;
         }
     }
 }
