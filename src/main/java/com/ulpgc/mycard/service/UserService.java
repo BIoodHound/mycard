@@ -2,15 +2,15 @@ package com.ulpgc.mycard.service;
 
 import com.ulpgc.mycard.dto.LoginDto;
 import com.ulpgc.mycard.dto.UserDto;
-import com.ulpgc.mycard.models.Card;
 import com.ulpgc.mycard.models.Users;
-import com.ulpgc.mycard.repository.CardRepository;
 import com.ulpgc.mycard.repository.UserRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 public class UserService {
@@ -89,11 +89,30 @@ public class UserService {
             Boolean valid = passwordEncoder.matches(loginDto.getPassword(), user.getPassword());
 
             if(Objects.nonNull(user) && valid){
+
                 return user.getId().toString();
             }
             return "err";
         } catch (Exception e){
             return "err";
+        }
+    }
+
+    public UserDto getUser(Long id){
+        try{
+            Optional<Users> user = userRepository.findById(id);
+            if(user.isPresent()){
+                Users u = user.get();
+                UserDto userDto = new UserDto();
+                userDto.setUsername(u.getUsername());
+                userDto.setEmail(u.getEmail());
+                userDto.setLastName(u.getLastName());
+                userDto.setName(u.getName());
+                return userDto;
+            }
+            return null;
+        } catch (Exception e){
+            return null;
         }
     }
 }

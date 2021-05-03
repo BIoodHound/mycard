@@ -2,10 +2,15 @@ package com.ulpgc.mycard.controller;
 
 import com.ulpgc.mycard.dto.LoginDto;
 import com.ulpgc.mycard.dto.UserDto;
+import com.ulpgc.mycard.models.Card;
+import com.ulpgc.mycard.models.Users;
 import com.ulpgc.mycard.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Objects;
+import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -48,5 +53,19 @@ public class UserController {
             return ResponseEntity.badRequest().body("wrong username or password");
         }
         return ResponseEntity.badRequest().body("wrong username or password");
+    }
+
+    @GetMapping("/api/user/{user_id}")
+    public ResponseEntity<?> getUser(@PathVariable("user_id") Long id){
+        try{
+            UserDto user = userService.getUser(id);
+            if(Objects.isNull(user)){
+                return ResponseEntity.badRequest().body("bad");
+            }
+            return ResponseEntity.ok(user);
+
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body("bad");
+        }
     }
 }
