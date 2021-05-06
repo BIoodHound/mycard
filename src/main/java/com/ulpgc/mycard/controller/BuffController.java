@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,4 +32,16 @@ public class BuffController {
         return ResponseEntity.badRequest().body("bad");
     }
 
+    @GetMapping("api/buff/{buff_id}")
+    public ResponseEntity<?> getBuff(@PathVariable("buff_id") Long id){
+        try {
+            Buff buff = buffService.getBuffById(id);
+            if(Objects.nonNull(buff)){
+                return ResponseEntity.ok(buff);
+            }
+            return ResponseEntity.badRequest().body("bad");
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("bad");
+        }
+    }
 }
