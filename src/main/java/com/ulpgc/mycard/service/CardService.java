@@ -32,7 +32,7 @@ public class CardService {
             card.setName("angry fox");
             card.setAttack(1);
             card.setHealth(3);
-            card.setImage("");
+            card.setImage("https://i2-prod.mirror.co.uk/incoming/article8150610.ece/ALTERNATES/s1200b/PAY-Angry-birds.jpg");
 
             card.setUser(user);
             cardRepository.save(card);

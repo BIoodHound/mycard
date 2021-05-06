@@ -19,10 +19,10 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping("/api/editAccount")
-    public ResponseEntity saveDto(@RequestBody UserDto userDto) {
+    @PostMapping("/api/editAccount/{user_id}")
+    public ResponseEntity saveDto(@RequestBody UserDto userDto, @PathVariable("user_id") Long id) {
         try{
-            userService.updateUser(userDto);
+            userService.updateUser(userDto, id);
             return ResponseEntity.ok("200");
         }catch (Exception e){
             return ResponseEntity.badRequest().body("error");

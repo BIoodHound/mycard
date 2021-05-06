@@ -5,6 +5,7 @@ import com.ulpgc.mycard.dto.UserDto;
 import com.ulpgc.mycard.models.Users;
 import com.ulpgc.mycard.repository.UserRepository;
 import org.apache.catalina.User;
+import org.apache.catalina.UserDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,12 +25,31 @@ public class UserService {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    public int updateUser(UserDto userDto){
-        String pass = passwordEncoder
-                .encode(userDto.getPassword());
-        userDto.setPassword(pass);
+    public int updateUser(UserDto userDto, Long id){
+        if(userDto.getPassword() != null){
+            String pass = passwordEncoder
+                    .encode(userDto.getPassword());
+            userDto.setPassword(pass);
+        }
+
         try{
-            Users user = userRepository.findByUsername(userDto.getUsername());
+            Optional<Users> user = userRepository.findById(id);
+            if(user.isPresent()){
+                Users u = user.get();
+                u.setUsername(userDto.getUsername());
+                u.setName(userDto.getName());
+                u.setLastName(userDto.getLastName());
+                u.setEmail(userDto.getEmail());
+                String password = userDto.getPassword();
+                if( password == null){
+                    userRepository.save(u);
+                } else{
+                    u.setPassword(password);
+                    userRepository.save(u);
+                }
+
+            }
+            /*user.setUsername(userDto.getUsername());
             user.setName(userDto.getName());
             user.setLastName(userDto.getLastName());
             user.setEmail(userDto.getEmail());
@@ -40,7 +60,7 @@ public class UserService {
             } else{
                 user.setPassword(password);
                 userRepository.save(user);
-            }
+            }*/
             return 1;
 
         } catch (Exception e){
@@ -108,6 +128,7 @@ public class UserService {
                 userDto.setEmail(u.getEmail());
                 userDto.setLastName(u.getLastName());
                 userDto.setName(u.getName());
+                //userDto.setPassword(u.getPassword());
                 return userDto;
             }
             return null;
