@@ -56,7 +56,7 @@ public class EnemyController {
         }
     }
 
-    @PostMapping("api/enemy/addbuff/{enemy_id}")
+    @PostMapping("api/enemy/addbuff")
     public ResponseEntity<?> addBuff(@RequestBody AttachBuffDto attachBuffDto){
         try{
             if(enemyService.addBuff(attachBuffDto)){
@@ -68,7 +68,7 @@ public class EnemyController {
         return ResponseEntity.badRequest().body("bad");
     }
 
-    @PostMapping("api/enemy/removebuff/{enemy_id}")
+    @PostMapping("api/enemy/removebuff")
     public ResponseEntity<?> removeBuff(@RequestBody AttachBuffDto attachBuffDto){
         try{
             if(enemyService.removeBuff(attachBuffDto)){
