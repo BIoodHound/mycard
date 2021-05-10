@@ -20,7 +20,7 @@ public class CardController {
     @GetMapping("api/card/{card_id}")
     public ResponseEntity<?> getCard(@PathVariable("card_id") Long id){
         try{
-            Card card =  cardService.getCard(id);
+            Card card = cardService.getCard(id);
             if(card.getCardId()==null){
                 return ResponseEntity.badRequest().body("bad");
             }
