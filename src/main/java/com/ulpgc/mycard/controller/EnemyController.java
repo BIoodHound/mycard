@@ -47,7 +47,7 @@ public class EnemyController {
     public ResponseEntity<?> createEnemy(@RequestBody EnemyCardDto enemyCardDto){
         try{
             if(enemyService.createEnemy(enemyCardDto) == 1){
-                return ResponseEntity.ok("User Registered Successfully");
+                return ResponseEntity.ok("Enemy Card create Successfully");
             }
             return ResponseEntity.badRequest().body("bad");
         }catch (Exception e){
