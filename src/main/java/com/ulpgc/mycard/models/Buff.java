@@ -16,6 +16,8 @@ public class Buff {
 
     private String name;
 
+    private String image;
+
     private String description;
 
     private Integer hp_buff;

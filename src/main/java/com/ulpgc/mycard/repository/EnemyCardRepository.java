@@ -7,4 +7,5 @@ import org.springframework.stereotype.Service;
 @Service
 public interface EnemyCardRepository extends JpaRepository<EnemyCard, Long> {
     EnemyCard findEnemyCardByEnemyId(Long id);
+    EnemyCard findEnemyCardByName(String name);
 }

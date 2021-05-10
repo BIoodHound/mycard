@@ -30,7 +30,6 @@ public class UserController {
     }
     @PostMapping("/api/register")
     public ResponseEntity registerDto(@RequestBody UserDto userDto){
-        System.out.println(userDto);
         try{
             if(userService.registerUser(userDto) == 1){
                 return ResponseEntity.ok("User Registered Successfully");
