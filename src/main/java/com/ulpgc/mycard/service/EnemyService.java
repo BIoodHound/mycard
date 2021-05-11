@@ -48,8 +48,8 @@ public class EnemyService {
                     enemyCardDto.getHealth() == null ||
                     enemyCardDto.getImage().isBlank() ||
                     enemyCardDto.getDescription().isBlank() ||
-                    enemyCard.getWindfury() ||
-                    enemyCardDto.getDivineShield()){
+                    enemyCardDto.getWindfury() == null ||
+                    enemyCardDto.getDivineShield() == null){
                 return 0;
             }
             enemyCard = new EnemyCard();
