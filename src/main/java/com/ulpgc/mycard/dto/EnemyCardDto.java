@@ -11,4 +11,10 @@ public class EnemyCardDto {
     private Integer health;
 
     private String image;
+
+    private String description;
+
+    private Boolean windfury;
+
+    private Boolean divineShield;
 }

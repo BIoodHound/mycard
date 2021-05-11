@@ -3,7 +3,6 @@ package com.ulpgc.mycard.models;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Set;
 
 @Data
 @Entity
@@ -20,7 +19,10 @@ public class EnemyCard {
 
     private String image;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    private Set<Buff> buffs;
+    private String description;
+
+    private Boolean windfury;
+
+    private Boolean divineShield;
 
 }

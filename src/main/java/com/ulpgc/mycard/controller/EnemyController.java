@@ -55,29 +55,4 @@ public class EnemyController {
             return ResponseEntity.badRequest().body("bad");
         }
     }
-
-    @PostMapping("api/enemy/addbuff")
-    public ResponseEntity<?> addBuff(@RequestBody AttachBuffDto attachBuffDto){
-        try{
-            if(enemyService.addBuff(attachBuffDto)){
-                return ResponseEntity.ok("buff added");
-            }
-        }catch (Exception e){
-            return ResponseEntity.badRequest().body("bad");
-        }
-        return ResponseEntity.badRequest().body("bad");
-    }
-
-    @PostMapping("api/enemy/removebuff")
-    public ResponseEntity<?> removeBuff(@RequestBody AttachBuffDto attachBuffDto){
-        try{
-            if(enemyService.removeBuff(attachBuffDto)){
-                return ResponseEntity.ok("buff removed");
-            }
-            return ResponseEntity.badRequest().body("bad");
-
-        } catch (Exception e){
-            return ResponseEntity.badRequest().body("bad");
-        }
-    }
 }

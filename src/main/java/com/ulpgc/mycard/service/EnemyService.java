@@ -46,7 +46,10 @@ public class EnemyService {
             if(enemyCardDto.getName().isBlank() ||
                     enemyCardDto.getAttack() == null ||
                     enemyCardDto.getHealth() == null ||
-                    enemyCardDto.getImage().isBlank()){
+                    enemyCardDto.getImage().isBlank() ||
+                    enemyCardDto.getDescription().isBlank() ||
+                    enemyCard.getWindfury() ||
+                    enemyCardDto.getDivineShield()){
                 return 0;
             }
             enemyCard = new EnemyCard();
@@ -55,6 +58,9 @@ public class EnemyService {
             enemyCard.setAttack(enemyCardDto.getAttack());
             enemyCard.setHealth(enemyCardDto.getHealth());
             enemyCard.setImage(enemyCardDto.getImage());
+            enemyCard.setDescription(enemyCardDto.getDescription());
+            enemyCard.setWindfury(enemyCardDto.getWindfury());
+            enemyCard.setDivineShield(enemyCardDto.getDivineShield());
 
             enemyCardRepository.save(enemyCard);
 
@@ -64,36 +70,4 @@ public class EnemyService {
         return 1;
     }
 
-    public Boolean addBuff(AttachBuffDto attachBuffDto){
-        try {
-            Buff buff = buffService.getBuffById(attachBuffDto.getBuffId());
-            EnemyCard enemyCard = enemyCardRepository.findEnemyCardByEnemyId(Long.valueOf(attachBuffDto.getUserId()));
-
-            Set<Buff> buffs = enemyCard.getBuffs();
-            buffs.add(buff);
-            enemyCard.setBuffs(buffs);
-
-            enemyCardRepository.save(enemyCard);
-
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
-
-    public Boolean removeBuff(AttachBuffDto removeBuffDto){
-        try {
-            Buff buff = buffService.getBuffById(removeBuffDto.getBuffId());
-            EnemyCard enemyCard = enemyCardRepository.findEnemyCardByEnemyId(Long.valueOf(removeBuffDto.getUserId()));
-
-            Set<Buff> buffs = enemyCard.getBuffs();
-            buffs.remove(buff);
-            enemyCard.setBuffs(buffs);
-
-            enemyCardRepository.save(enemyCard);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
-    }
 }
