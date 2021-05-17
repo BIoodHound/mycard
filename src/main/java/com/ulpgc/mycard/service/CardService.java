@@ -10,10 +10,7 @@ import com.ulpgc.mycard.repository.CardRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class CardService {
@@ -37,9 +34,11 @@ public class CardService {
         Integer health = card.getHealth();
         Boolean hasWindFury = false;
         Boolean hasDivineShield = false;
-        Integer size = card.getBuffs().size();
-        if(size>1){
-            BuffShell buffShell = buffService.getBuffShell((List<Buff>) card.getBuffs());
+
+        List<Buff> buffs = setToList(card.getBuffs());
+        Integer size = buffs.size();
+        if(size>=1){
+            BuffShell buffShell = buffService.getBuffShell(buffs);
             attack = card.getAttack() + buffShell.getAttack();
             health = card.getHealth() + buffShell.getHealth();
             hasWindFury = buffShell.getWindFury();
@@ -55,6 +54,14 @@ public class CardService {
                 hasDivineShield
         );
         return playerCardDto;
+    }
+
+    public List<Buff> setToList(Set<Buff> buffs){
+        List<Buff> res = new ArrayList<>();
+        for (Buff buff: buffs){
+            res.add(buff);
+        }
+        return res;
     }
 
     public Boolean createCard(Users user){
