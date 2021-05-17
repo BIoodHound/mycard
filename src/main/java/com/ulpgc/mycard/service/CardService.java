@@ -1,7 +1,9 @@
 package com.ulpgc.mycard.service;
 
 import com.ulpgc.mycard.dto.AttachBuffDto;
+import com.ulpgc.mycard.dto.PlayerCardDto;
 import com.ulpgc.mycard.models.Buff;
+import com.ulpgc.mycard.models.BuffShell;
 import com.ulpgc.mycard.models.Card;
 import com.ulpgc.mycard.models.Users;
 import com.ulpgc.mycard.repository.CardRepository;
@@ -9,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Service
@@ -22,6 +26,35 @@ public class CardService {
     public Card getCard(Long id){
         Card card = cardRepository.findCardByCardId(id);
         return card;
+    }
+
+    public PlayerCardDto getCardBuffCalc(Long id){
+        Card card = getCard(id);
+        if(Objects.isNull(card)){
+            return null;
+        }
+        Integer attack = card.getAttack();
+        Integer health = card.getHealth();
+        Boolean hasWindFury = false;
+        Boolean hasDivineShield = false;
+        Integer size = card.getBuffs().size();
+        if(size>1){
+            BuffShell buffShell = buffService.getBuffShell((List<Buff>) card.getBuffs());
+            attack = card.getAttack() + buffShell.getAttack();
+            health = card.getHealth() + buffShell.getHealth();
+            hasWindFury = buffShell.getWindFury();
+            hasDivineShield = buffShell.getDivineShield();
+        }
+
+        PlayerCardDto playerCardDto = new PlayerCardDto(
+                card.getName(),
+                attack,
+                health,
+                card.getImage(),
+                hasWindFury,
+                hasDivineShield
+        );
+        return playerCardDto;
     }
 
     public Boolean createCard(Users user){

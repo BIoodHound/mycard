@@ -17,4 +17,14 @@ public class EnemyCardDto {
     private Boolean windfury;
 
     private Boolean divineShield;
+
+    public EnemyCardDto(String name, Integer attack, Integer health, String image, String description, Boolean windfury, Boolean divineShield) {
+        this.name = name;
+        this.attack = attack;
+        this.health = health;
+        this.image = image;
+        this.description = description;
+        this.windfury = windfury;
+        this.divineShield = divineShield;
+    }
 }
