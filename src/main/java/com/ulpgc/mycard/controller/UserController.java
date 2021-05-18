@@ -1,16 +1,15 @@
 package com.ulpgc.mycard.controller;
 
+import com.ulpgc.mycard.dto.EditStarterCardRequestBody;
 import com.ulpgc.mycard.dto.LoginDto;
 import com.ulpgc.mycard.dto.UserDto;
-import com.ulpgc.mycard.models.Card;
-import com.ulpgc.mycard.models.Users;
+import com.ulpgc.mycard.service.StarterCardService;
 import com.ulpgc.mycard.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
-import java.util.Optional;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
@@ -18,6 +17,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    StarterCardService starterCardService;
 
     @PostMapping("/api/editAccount/{user_id}")
     public ResponseEntity saveDto(@RequestBody UserDto userDto, @PathVariable("user_id") Long id) {
@@ -65,6 +67,28 @@ public class UserController {
 
         } catch (Exception e){
             return ResponseEntity.badRequest().body("bad");
+        }
+    }
+
+    @GetMapping("/api/starterCards")
+    public ResponseEntity<?> getStarterCards(){
+        try {
+            return ResponseEntity.ok(starterCardService.getStarterCards());
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body("Server error");
+        }
+    }
+
+    @PostMapping("/api/starterCards")
+    public ResponseEntity<?> setStarterCard(@RequestBody EditStarterCardRequestBody editStarterCardRequestBody){
+        try {
+            if(starterCardService.setStarterCard(editStarterCardRequestBody)){
+                return ResponseEntity.ok("Card Edited");
+            } else {
+                return ResponseEntity.badRequest().body("Server Error");
+            }
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("Incorrect Parameter");
         }
     }
 }
